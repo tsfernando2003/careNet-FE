@@ -1,4 +1,4 @@
-/* Always on top, sticky + modern gradient */
+
 .header {
   background: linear-gradient(90deg, #4f46e5, #8b5cf6);
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -13,12 +13,12 @@
 }
 
 .header .nav-link:hover {
-  color: #facc15; /* yellow hover */
+  color: #facc15;
   
 }
 
 body {
-  padding-top: 70px; /* push content down so header doesn’t overlap */
+  padding-top: 70px;
 }
 
 
