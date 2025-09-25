@@ -30,7 +30,7 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Header />
-      <main className="container">
+      <main className="container mt-5">
         <section className="slideshow">
           {slides.map((slide, index) => (
             <img
