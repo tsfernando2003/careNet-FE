@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header/Header";
+import Header from "../../components/Header/Header";
 import "./HomePage.css";
 
-import slide1 from "../assets/slide 1.jpg";
-import slide2 from "../assets/slide2.jpg";
-import slide3 from "../assets/slide3.jpg";
-import slide4 from "../assets/pexels-olly-755049.jpg";
-import slide5 from "../assets/pexels-markus-winkler-1430818-30885929.jpg";
+import slide1 from "../../assets/slide1.jpg";
+import slide2 from "../../assets/slide2.jpg";
+import slide3 from "../../assets/slide3.jpg";
+import slide4 from "../../assets/pexels-olly-755049.jpg";
+import slide5 from "../../assets/pexels-markus-winkler-1430818-30885929.jpg";
+import { Link } from "react-router-dom";
 
 const HomePage: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -76,7 +77,9 @@ const HomePage: React.FC = () => {
         <section className="cta">
           <h2>Find the Perfect Caregiver Today</h2>
           <p>Join CareNet and book trusted caregivers with ease.</p>
-          <button className="cta-button">Book Now</button>
+         <Link to="/booking">
+            <button className="cta-button">Book Now</button>
+          </Link>
         </section>
       </main>
     </>
