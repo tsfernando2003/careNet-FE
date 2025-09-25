@@ -101,7 +101,7 @@ const BookingPage: React.FC = () => {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Box
           sx={{
-            mt:4,
+            mt:5,
             background: "linear-gradient(135deg, #1976d2 0%, #4a90e2 100%)",
             color: "white",
             padding: "2rem",
