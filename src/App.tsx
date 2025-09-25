@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import HomePage from './pages/HomePage/HomePage';
 import BookingPage from './pages/BookingPage/Booking';
+import PaymentPage from './pages/PaymentGateawayPage/Payment';
 import './App.css';
 
 
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/booking" element={<BookingPage />} />
+           <Route path="/payment" element={<PaymentPage />} />
           {/* Add routes for Payment, Success, Failure later */}
         </Routes>
       </Router>
