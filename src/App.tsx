@@ -1,9 +1,29 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import HomePage from './pages/HomePage/HomePage';
+import BookingPage from './pages/BookingPage/Booking';
+import './App.css';
 
-import HomePage from "./pages/HomePage";
-import "./App.css";
+
+const theme = createTheme({
+  palette: {
+    primary: { main: '#1976d2' }, 
+    secondary: { main: '#f50057' }, 
+  },
+});
 
 function App() {
-  return <HomePage />;
+  return (
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/booking" element={<BookingPage />} />
+          {/* Add routes for Payment, Success, Failure later */}
+        </Routes>
+      </Router>
+    </ThemeProvider>
+  );
 }
 
 export default App;
