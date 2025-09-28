@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .endpoint { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .result { margin-top: 10px; padding: 10px; background: #f5f5f5; border-radius: 3px; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        input[type="file"] { margin: 10px 0; }
+        .error { background: #ffe6e6; color: #d63031; }
+        .success { background: #e6ffe6; color: #00b894; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CareNet File Upload Test</h1>
+        
+        <div class="endpoint">
+            <h3>Test 1: Basic connectivity (GET /api/caregivers)</h3>
+            <button onclick="testGetCaregivers()">Test GET Caregivers</button>
+            <div id="result1" class="result"></div>
+        </div>
+
+        <div class="endpoint">
+            <h3>Test 2: File upload test endpoint (POST /api/caregivers/2/files/test)</h3>
+            <button onclick="testFileUploadEndpoint()">Test Upload Endpoint</button>
+            <div id="result2" class="result"></div>
+        </div>
+
+        <div class="endpoint">
+            <h3>Test 3: File upload with @RequestPart (POST /api/caregivers/2/files)</h3>
+            <input type="file" id="fileInput1" multiple accept="*/*">
+            <button onclick="testFileUploadPart()">Upload with @RequestPart</button>
+            <div id="result3" class="result"></div>
+        </div>
+
+        <div class="endpoint">
+            <h3>Test 4: File upload with @RequestParam (POST /api/caregivers/2/upload)</h3>
+            <input type="file" id="fileInput2" multiple accept="*/*">
+            <button onclick="testFileUploadParam()">Upload with @RequestParam</button>
+            <div id="result4" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8080/api';
+
+        async function testGetCaregivers() {
+            try {
+                const response = await fetch(`${API_BASE}/caregivers`);
+                const data = await response.json();
+                document.getElementById('result1').innerHTML = `
+                    <strong>Success!</strong><br>
+                    Status: ${response.status}<br>
+                    Found ${data.length} caregivers<br>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+                document.getElementById('result1').className = 'result success';
+            } catch (error) {
+                document.getElementById('result1').innerHTML = `<strong>Error:</strong> ${error.message}`;
+                document.getElementById('result1').className = 'result error';
+            }
+        }
+
+        async function testFileUploadEndpoint() {
+            try {
+                const response = await fetch(`${API_BASE}/caregivers/2/files/test`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                document.getElementById('result2').innerHTML = `
+                    <strong>Success!</strong><br>
+                    Status: ${response.status}<br>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+                document.getElementById('result2').className = 'result success';
+            } catch (error) {
+                document.getElementById('result2').innerHTML = `<strong>Error:</strong> ${error.message}`;
+                document.getElementById('result2').className = 'result error';
+            }
+        }
+
+        async function testFileUploadPart() {
+            const fileInput = document.getElementById('fileInput1');
+            if (!fileInput.files.length) {
+                alert('Please select at least one file');
+                return;
+            }
+
+            try {
+                const formData = new FormData();
+                
+                // Add files as separate entries (for @RequestPart)
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    formData.append('files', fileInput.files[i]);
+                }
+
+                console.log('FormData entries for RequestPart:');
+                for (let pair of formData.entries()) {
+                    console.log(pair[0] + ': ' + pair[1].name + ' (' + pair[1].size + ' bytes)');
+                }
+
+                const response = await fetch(`${API_BASE}/caregivers/2/files`, {
+                    method: 'POST',
+                    body: formData
+                    // Don't set Content-Type - let browser set it with boundary
+                });
+                
+                const data = await response.json();
+                document.getElementById('result3').innerHTML = `
+                    <strong>Status: ${response.status}</strong><br>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+                document.getElementById('result3').className = response.ok ? 'result success' : 'result error';
+            } catch (error) {
+                document.getElementById('result3').innerHTML = `<strong>Error:</strong> ${error.message}`;
+                document.getElementById('result3').className = 'result error';
+            }
+        }
+
+        async function testFileUploadParam() {
+            const fileInput = document.getElementById('fileInput2');
+            if (!fileInput.files.length) {
+                alert('Please select at least one file');
+                return;
+            }
+
+            try {
+                const formData = new FormData();
+                
+                // Add files as separate entries (for @RequestParam)
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    formData.append('files', fileInput.files[i]);
+                }
+
+                console.log('FormData entries for RequestParam:');
+                for (let pair of formData.entries()) {
+                    console.log(pair[0] + ': ' + pair[1].name + ' (' + pair[1].size + ' bytes)');
+                }
+
+                const response = await fetch(`${API_BASE}/caregivers/2/upload`, {
+                    method: 'POST',
+                    body: formData
+                    // Don't set Content-Type - let browser set it with boundary
+                });
+                
+                const data = await response.json();
+                document.getElementById('result4').innerHTML = `
+                    <strong>Status: ${response.status}</strong><br>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+                document.getElementById('result4').className = response.ok ? 'result success' : 'result error';
+            } catch (error) {
+                document.getElementById('result4').innerHTML = `<strong>Error:</strong> ${error.message}`;
+                document.getElementById('result4').className = 'result error';
+            }
+        }
+    </script>
+</body>
+</html>
