@@ -24,6 +24,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import dayjs, { Dayjs } from "dayjs";
 import "./Booking.css";
 import Header from "../../components/Header/Header";
+import axios from "axios";
 
 import maleNurseImage from "../../assets/male nurse.webp";
 
@@ -75,25 +76,34 @@ const BookingPage: React.FC = () => {
 
   const totalCost = caregiver.hourlyRate * duration;
 
-  const handleConfirm = () => {
-    if (!selectedDate || !selectedSlot || !duration) {
-      alert("Please select a date, time slot, and duration.");
-      return;
-    }
+  // inside BookingPage
+const handleConfirm = async () => {
+  if (!selectedDate || !selectedSlot || !duration) {
+    alert("Please select a date, time slot, and duration.");
+    return;
+  }
 
-    const bookingData = {
-      caregiverId: caregiver.caregiverId,
-      userId: "user123",
-      date: selectedDate.format("YYYY-MM-DD"),
-      slot: selectedSlot,
-      duration,
-      instructions,
-      totalCost,
-    };
-
-    console.log("Sending booking to BE:", bookingData);
-    navigate("/payment", { state: { booking: bookingData } });
+  const bookingData = {
+    caregiverId: caregiver.caregiverId,
+    userId: "user123", // replace with actual logged-in user later
+    date: selectedDate.format("YYYY-MM-DD"),
+    slot: selectedSlot,
+    duration,
+    instructions,
+    totalCost,
   };
+
+  try {
+    const response = await axios.post("http://localhost:8081/api/bookings", bookingData);
+    console.log("Booking saved:", response.data);
+
+    // Navigate with saved booking info
+    navigate("/payment", { state: { booking: response.data } });
+  } catch (error) {
+    console.error("Error saving booking:", error);
+    alert("Something went wrong while booking ❌");
+  }
+};
 
   return (
     <>

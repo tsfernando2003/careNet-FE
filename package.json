@@ -17,6 +17,7 @@
     "@mui/system": "^7.3.2",
     "@mui/x-date-pickers": "^8.11.3",
     "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.12.2",
     "bootstrap": "^5.3.8",
     "dayjs": "^1.11.18",
     "react": "^19.1.1",
