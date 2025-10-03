@@ -16,6 +16,9 @@ const HomePage: React.FC = () => {
     slide1,slide2,slide3, slide4 , slide5
   ];
 
+
+  
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
