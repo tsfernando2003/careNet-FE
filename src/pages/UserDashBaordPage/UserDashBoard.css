@@ -1,0 +1,133 @@
+.dashboard-container {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background-color: lch(98.27% 0.01 296.81);
+  min-height: 100vh;
+}
+
+.dashboard-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.dashboard-subtitle {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stats-card {
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.stats-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.25rem;
+}
+
+.bookings-list,
+.payments-list {
+  margin-top: 2rem;
+}
+
+.section-title {
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.booking-card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.booking-info h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.booking-info .role {
+  color: #555;
+}
+
+.booking-info .rating {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.booking-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #eaeaea;
+}
+
+.btn.primary {
+  background: #007bff;
+  color: #fff;
+  border: none;
+}
+
+.btn.primary:hover {
+  background: #0069d9;
+}
+
+.status {
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.status.upcoming {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status.completed {
+  background: #e8f5e9;
+  color: #388e3c;
+}
+
+.status.cancelled {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.payment-card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1rem;
+}
