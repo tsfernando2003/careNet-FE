@@ -14,6 +14,7 @@ import CreditCardIcon from '@mui/icons-material/CreditCard';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import './Payment.css';
 import Header from '../../components/Header/Header';
+import axios from 'axios';
 
 const PaymentPage: React.FC = () => {
   const location = useLocation();
@@ -25,17 +26,44 @@ const PaymentPage: React.FC = () => {
   const [expiry, setExpiry] = useState('');
   const [cvv, setCvv] = useState('');
 
-  const handlePayment = () => {
-    if (!cardNumber || !cardName || !expiry || !cvv) {
-      alert('Please fill all payment details.');
-      return;
-    }
+  const handlePayment = async () => {
+  if (!cardNumber || !cardName || !expiry || !cvv) {
+    alert('Please fill all payment details.');
+    return;
+  }
 
-    // Mock API call
-    console.log('Payment details:', { cardNumber, cardName, expiry, cvv, booking });
+  if (!booking) {
+    alert('No booking info found!');
+    return;
+  }
+
+  const paymentRequest = {
+    booking: { bookingID: booking.bookingID }, // make sure your booking has bookingID
+    cardNumber,
+    cardName,
+    expiry,
+    cvv,
+    amount: booking.totalCost,
+  };
+
+  try {
+    const response = await axios.post(
+      'http://localhost:8081/api/payments', // your BE payment endpoint
+      paymentRequest
+    );
+
+    console.log('Payment response:', response.data);
     alert('Payment successful! 🎉');
     navigate('/confirmation', { state: { booking } });
-  };
+  } catch (error: any) {
+    console.error('Payment error:', error.response || error.message);
+    alert(
+      `Something went wrong while processing payment: ${
+        error.response?.data?.message || error.message
+      }`
+    );
+  }
+};
 
   return (
     <>
